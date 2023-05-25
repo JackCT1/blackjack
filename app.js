@@ -14,7 +14,7 @@ const rankToPoints = {
   K: 10,
 };
 
-function deck() {
+function createDeck() {
   const cards = [];
   const suits = ["S", "D", "C", "H"];
   const rank = [
@@ -50,4 +50,20 @@ function shuffleDeck(deck) {
   console.log(deck);
 }
 
-shuffleDeck(deck());
+function pointsFor(cards) {
+  const rank = cards.map((card) => {
+    return card.slice(0, 1);
+  });
+  let points = 0;
+  rank.forEach((item) => {
+    points += rankToPoints[item];
+  });
+  if (points === 22 && rank.length === 2) {
+    points = 21;
+  } else if (points < 21 && rank.length >= 6) {
+    points = 21;
+  }
+  return points;
+}
+
+shuffleDeck(createDeck());
