@@ -52,6 +52,7 @@ function shuffleDeck(deck) {
     deck[randomIndex] = card;
   }
   console.log(deck);
+  return deck;
 }
 
 function pointsFor(cards) {
@@ -123,4 +124,39 @@ function dealersTurn(deck, hand) {
   return false;
 }
 
-shuffleDeck(createDeck());
+function play() {
+  const shuffledDeck = shuffleDeck(createDeck());
+  const playerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
+  const playerCardsRank = playerHand.map((item) => {
+    return item.slice(0, 1);
+  });
+
+  console.log(playerCardsRank);
+
+  let isPlayerTurn = true;
+  let isDealerTurn = true;
+
+  while (isPlayerTurn) {
+    isPlayerTurn = playerTurn(shuffledDeck, playerHand);
+  }
+
+  const dealerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
+
+  if (pointsFor(playerHand) <= 21 && playerCardsRank !== ["A", "A"]) {
+    while (isDealerTurn) {
+      isDealerTurn = dealersTurn(shuffledDeck, dealerHand);
+    }
+  }
+
+  if (pointsFor(playerHand) <= 21 && pointsFor(dealerHand) <= 21) {
+    if (pointsFor(playerHand) > pointsFor(dealerHand)) {
+      console.log(WIN_MESSAGE);
+    } else if (pointsFor(playerHand) < pointsFor(dealerHand)) {
+      logger.info(LOSE_MESSAGE);
+    } else {
+      console.log(DRAW_MESSAGE);
+    }
+  }
+}
+
+play();
