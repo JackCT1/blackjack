@@ -66,4 +66,40 @@ function pointsFor(cards) {
   return points;
 }
 
+function playerTurn(deck, hand) {
+  console.log(`Your hand is ${hand.join(", ")}\n(${pointsFor(hand)} points)`);
+
+  if (pointsFor(hand) === 21) {
+    return false;
+  }
+
+  if (pointsFor(hand) > 21) {
+    console.log(LOSE_MESSAGE);
+    return false;
+  }
+
+  //Accept the choice from the player
+  const action = window.prompt('What do you want to do? ("hit" or "stick")');
+
+  switch (action) {
+    case "hit": {
+      // Draw a card
+      const card = deck.shift();
+      console.log("Hitting");
+      console.log("You draw " + card);
+      hand.push(card);
+      // It's still the player's turn
+      return true;
+    }
+    case "stick": {
+      // End the player's turn
+      return false;
+    }
+    default: {
+      // Unknown action
+      break;
+    }
+  }
+}
+
 shuffleDeck(createDeck());
