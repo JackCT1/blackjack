@@ -1,3 +1,7 @@
+const LOSE_MESSAGE = "You lose!";
+const WIN_MESSAGE = "You win!";
+const DRAW_MESSAGE = "Draw!";
+
 const rankToPoints = {
   A: 11,
   2: 2,
@@ -100,6 +104,23 @@ function playerTurn(deck, hand) {
       break;
     }
   }
+}
+
+function dealersTurn(deck, hand) {
+  console.log(
+    `Dealers hand is ${hand.join(", ")}\n(${pointsFor(hand)} points)`
+  );
+
+  while (pointsFor(hand) < 17) {
+    const card = deck.shift();
+    console.log("Dealer draws " + card);
+    hand.push(card);
+    return true;
+  }
+  if (pointsFor(hand) > 21) {
+    console.log(WIN_MESSAGE);
+  }
+  return false;
 }
 
 shuffleDeck(createDeck());
