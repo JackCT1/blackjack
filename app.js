@@ -126,6 +126,12 @@ function dealersTurn(deck, hand) {
   return false;
 }
 
+function displayCard(card, cardParentDiv) {
+  const cardDisplay = document.createElement("img");
+  cardDisplay.src = `https://deckofcardsapi.com/static/img/${card}.png`;
+  cardParentDiv.appendChild(cardDisplay);
+}
+
 function play() {
   const shuffledDeck = shuffleDeck(createDeck());
   const playerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
@@ -135,12 +141,17 @@ function play() {
 
   console.log(playerCardsRank);
 
+  displayCard(playerHand[0], playerCardsDisplay);
+  displayCard(playerHand[1], playerCardsDisplay);
+
+  /*
   const playerCardOne = document.createElement("img");
   const playerCardTwo = document.createElement("img");
   playerCardOne.src = `https://deckofcardsapi.com/static/img/${playerHand[0]}.png`;
   playerCardTwo.src = `https://deckofcardsapi.com/static/img/${playerHand[1]}.png`;
   playerCardsDisplay.appendChild(playerCardOne);
   playerCardsDisplay.appendChild(playerCardTwo);
+  */
 
   let isPlayerTurn = true;
   let isDealerTurn = true;
