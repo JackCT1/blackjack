@@ -2,6 +2,8 @@ const LOSE_MESSAGE = "You lose!";
 const WIN_MESSAGE = "You win!";
 const DRAW_MESSAGE = "Draw!";
 
+const playerCardsDisplay = document.querySelector(".player-cards");
+
 const rankToPoints = {
   A: 11,
   2: 2,
@@ -133,6 +135,13 @@ function play() {
 
   console.log(playerCardsRank);
 
+  const playerCardOne = document.createElement("img");
+  const playerCardTwo = document.createElement("img");
+  playerCardOne.src = `https://deckofcardsapi.com/static/img/${playerHand[0]}.png`;
+  playerCardTwo.src = `https://deckofcardsapi.com/static/img/${playerHand[1]}.png`;
+  playerCardsDisplay.appendChild(playerCardOne);
+  playerCardsDisplay.appendChild(playerCardTwo);
+
   let isPlayerTurn = true;
   let isDealerTurn = true;
 
@@ -152,7 +161,7 @@ function play() {
     if (pointsFor(playerHand) > pointsFor(dealerHand)) {
       console.log(WIN_MESSAGE);
     } else if (pointsFor(playerHand) < pointsFor(dealerHand)) {
-      logger.info(LOSE_MESSAGE);
+      console.log(LOSE_MESSAGE);
     } else {
       console.log(DRAW_MESSAGE);
     }
