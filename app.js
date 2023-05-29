@@ -3,6 +3,7 @@ const WIN_MESSAGE = "You win!";
 const DRAW_MESSAGE = "Draw!";
 
 const playerHandDisplay = document.querySelector(".player-cards");
+const dealerHandDisplay = document.querySelector(".dealer-cards");
 
 const rankToPoints = {
   A: 11,
@@ -131,6 +132,10 @@ function displayCard(playerHand, cardParentDiv) {
     cardParentDiv.removeChild(cardParentDiv.firstChild);
   }
   playerHand.forEach((card) => {
+    console.log(card);
+    if (card[0] === "1") {
+      card = card.substr(1);
+    }
     const cardDisplay = document.createElement("img");
     cardDisplay.src = `https://deckofcardsapi.com/static/img/${card}.png`;
     cardParentDiv.appendChild(cardDisplay);
@@ -166,10 +171,12 @@ function play() {
   }
 
   const dealerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
+  displayCard(dealerHand, dealerHandDisplay);
 
   if (pointsFor(playerHand) <= 21 && playerCardsRank !== ["A", "A"]) {
     while (isDealerTurn) {
       isDealerTurn = dealersTurn(shuffledDeck, dealerHand);
+      displayCard(dealerHand, dealerHand);
     }
   }
 
