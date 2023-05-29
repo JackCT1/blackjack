@@ -4,6 +4,8 @@ const DRAW_MESSAGE = "Draw!";
 
 const playerHandDisplay = document.querySelector(".player-cards");
 const dealerHandDisplay = document.querySelector(".dealer-cards");
+const hitButton = document.getElementById("hit-btn");
+const stickButton = document.getElementById("stick-btn");
 
 const rankToPoints = {
   A: 11,
@@ -76,6 +78,7 @@ function pointsFor(cards) {
 
 function playerTurn(deck, hand) {
   console.log(`Your hand is ${hand.join(", ")}\n(${pointsFor(hand)} points)`);
+  let isPlayerTurn;
 
   if (pointsFor(hand) === 21) {
     return false;
@@ -87,8 +90,9 @@ function playerTurn(deck, hand) {
   }
 
   //Accept the choice from the player
-  const action = window.prompt('What do you want to do? ("hit" or "stick")');
+  //const action = window.prompt('What do you want to do? ("hit" or "stick")');
 
+  /*
   switch (action) {
     case "hit": {
       // Draw a card
@@ -108,6 +112,8 @@ function playerTurn(deck, hand) {
       break;
     }
   }
+  */
+  return isPlayerTurn;
 }
 
 function dealersTurn(deck, hand) {
@@ -127,11 +133,11 @@ function dealersTurn(deck, hand) {
   return false;
 }
 
-function displayCard(playerHand, cardParentDiv) {
+function displayCard(hand, cardParentDiv) {
   while (cardParentDiv.hasChildNodes()) {
     cardParentDiv.removeChild(cardParentDiv.firstChild);
   }
-  playerHand.forEach((card) => {
+  hand.forEach((card) => {
     console.log(card);
     if (card[0] === "1") {
       card = card.substr(1);
@@ -141,6 +147,39 @@ function displayCard(playerHand, cardParentDiv) {
     cardParentDiv.appendChild(cardDisplay);
   });
 }
+
+const shuffledDeck = shuffleDeck(createDeck());
+const playerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
+displayCard(playerHand, playerHandDisplay);
+
+hitButton.addEventListener("click", function () {
+  const card = shuffledDeck.shift();
+  playerHand.push(card);
+  displayCard(playerHand, playerHandDisplay);
+
+  if (pointsFor(playerHand) > 21) {
+    alert("You have gone over 21! You lose!");
+  }
+});
+
+stickButton.addEventListener("click", function () {
+  const dealerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
+  displayCard(dealerHand, dealerHandDisplay);
+  while (pointsFor(dealerHand) < 17) {
+    const card = shuffledDeck.shift();
+    dealerHand.push(card);
+    displayCard(dealerHand, dealerHandDisplay);
+  }
+  if (pointsFor(playerHand) <= 21 && pointsFor(dealerHand) <= 21) {
+    if (pointsFor(playerHand) > pointsFor(dealerHand)) {
+      console.log(WIN_MESSAGE);
+    } else if (pointsFor(playerHand) < pointsFor(dealerHand)) {
+      console.log(LOSE_MESSAGE);
+    } else {
+      console.log(DRAW_MESSAGE);
+    }
+  }
+});
 
 function play() {
   const shuffledDeck = shuffleDeck(createDeck());
@@ -175,8 +214,11 @@ function play() {
 
   if (pointsFor(playerHand) <= 21 && playerCardsRank !== ["A", "A"]) {
     while (isDealerTurn) {
-      isDealerTurn = dealersTurn(shuffledDeck, dealerHand);
-      displayCard(dealerHand, dealerHand);
+      let timer = setTimeout(
+        (isDealerTurn = dealersTurn(shuffledDeck, dealerHand)),
+        1000
+      );
+      displayCard(dealerHand, dealerHandDisplay);
     }
   }
 
@@ -190,5 +232,3 @@ function play() {
     }
   }
 }
-
-play();
