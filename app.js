@@ -116,6 +116,10 @@ stickButton.addEventListener("click", function () {
     dealerHand.push(card);
     displayCard(dealerHand, dealerHandDisplay);
   }
+  if (pointsFor(dealerHand) > 21) {
+    console.log(WIN_MESSAGE);
+    alert(WIN_MESSAGE);
+  }
   if (pointsFor(playerHand) <= 21 && pointsFor(dealerHand) <= 21) {
     if (pointsFor(playerHand) > pointsFor(dealerHand)) {
       console.log(WIN_MESSAGE);
