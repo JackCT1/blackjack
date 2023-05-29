@@ -126,10 +126,17 @@ function dealersTurn(deck, hand) {
   return false;
 }
 
-function displayCard(card, cardParentDiv) {
+function displayCard(playerHand, cardParentDiv) {
+  /*
   const cardDisplay = document.createElement("img");
   cardDisplay.src = `https://deckofcardsapi.com/static/img/${card}.png`;
   cardParentDiv.appendChild(cardDisplay);
+  */
+  playerHand.forEach((card) => {
+    const cardDisplay = document.createElement("img");
+    cardDisplay.src = `https://deckofcardsapi.com/static/img/${card}.png`;
+    cardParentDiv.appendChild(cardDisplay);
+  });
 }
 
 function play() {
@@ -141,8 +148,7 @@ function play() {
 
   console.log(playerCardsRank);
 
-  displayCard(playerHand[0], playerCardsDisplay);
-  displayCard(playerHand[1], playerCardsDisplay);
+  displayCard(playerHand, playerCardsDisplay);
 
   /*
   const playerCardOne = document.createElement("img");
