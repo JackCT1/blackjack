@@ -68,6 +68,9 @@ function pointsFor(cards) {
   rank.forEach((item) => {
     points += rankToPoints[item];
   });
+  if (rank.includes("A") && points - 10 < 21) {
+    points = points - 10;
+  }
   if (points === 22 && rank.length === 2) {
     points = 21;
   } else if (points < 21 && rank.length >= 6) {
@@ -173,10 +176,13 @@ stickButton.addEventListener("click", function () {
   if (pointsFor(playerHand) <= 21 && pointsFor(dealerHand) <= 21) {
     if (pointsFor(playerHand) > pointsFor(dealerHand)) {
       console.log(WIN_MESSAGE);
+      alert(WIN_MESSAGE);
     } else if (pointsFor(playerHand) < pointsFor(dealerHand)) {
       console.log(LOSE_MESSAGE);
+      alert(LOSE_MESSAGE);
     } else {
       console.log(DRAW_MESSAGE);
+      alert(DRAW_MESSAGE);
     }
   }
 });
