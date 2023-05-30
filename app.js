@@ -68,7 +68,7 @@ function pointsFor(cards) {
   rank.forEach((item) => {
     points += rankToPoints[item];
   });
-  if (rank.includes("A") && points - 10 < 21) {
+  if (rank.includes("A") && points - 10 < 22) {
     points = points - 10;
   }
   if (points === 22 && rank.length === 2) {
@@ -104,7 +104,7 @@ hitButton.addEventListener("click", function () {
   displayCard(playerHand, playerHandDisplay);
 
   if (pointsFor(playerHand) > 21) {
-    alert("You have gone over 21! You lose!");
+    console.log("You have gone over 21! You lose!");
   }
 });
 
@@ -118,18 +118,14 @@ stickButton.addEventListener("click", function () {
   }
   if (pointsFor(dealerHand) > 21) {
     console.log(WIN_MESSAGE);
-    alert(WIN_MESSAGE);
   }
   if (pointsFor(playerHand) <= 21 && pointsFor(dealerHand) <= 21) {
     if (pointsFor(playerHand) > pointsFor(dealerHand)) {
       console.log(WIN_MESSAGE);
-      alert(WIN_MESSAGE);
     } else if (pointsFor(playerHand) < pointsFor(dealerHand)) {
       console.log(LOSE_MESSAGE);
-      alert(LOSE_MESSAGE);
     } else {
       console.log(DRAW_MESSAGE);
-      alert(DRAW_MESSAGE);
     }
   }
 });
