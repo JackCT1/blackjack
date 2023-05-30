@@ -4,10 +4,14 @@ const DRAW_MESSAGE = "Draw!";
 
 const playerHandDisplay = document.querySelector(".player-cards");
 const dealerHandDisplay = document.querySelector(".dealer-cards");
+
 const hitButton = document.getElementById("hit-btn");
 const stickButton = document.getElementById("stick-btn");
+
 const dealerScore = document.getElementById("dealer-score");
 const playerScore = document.getElementById("player-score");
+
+const result = document.getElementById("result");
 
 const rankToPoints = {
   A: 11,
@@ -126,14 +130,18 @@ stickButton.addEventListener("click", function () {
   }
   if (pointsFor(dealerHand) > 21) {
     console.log(WIN_MESSAGE);
+    result.innerHTML = WIN_MESSAGE;
   }
   if (pointsFor(playerHand) <= 21 && pointsFor(dealerHand) <= 21) {
     if (pointsFor(playerHand) > pointsFor(dealerHand)) {
       console.log(WIN_MESSAGE);
+      result.innerHTML = WIN_MESSAGE;
     } else if (pointsFor(playerHand) < pointsFor(dealerHand)) {
       console.log(LOSE_MESSAGE);
+      result.innerHTML = LOSE_MESSAGE;
     } else {
       console.log(DRAW_MESSAGE);
+      result.innerHTML = DRAW_MESSAGE;
     }
   }
 });
