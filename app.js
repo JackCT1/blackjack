@@ -113,6 +113,7 @@ hitButton.addEventListener("click", function () {
 
   if (pointsFor(playerHand) > 21) {
     console.log("You have gone over 21! You lose!");
+    result.innerHTML = LOSE_MESSAGE;
   }
 });
 
