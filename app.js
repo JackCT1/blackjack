@@ -69,7 +69,9 @@ function pointsFor(cards) {
     points += rankToPoints[item];
   });
   if (rank.includes("A") && points - 10 < 22) {
-    points = points - 10;
+    if (rank.length !== 2) {
+      points = points - 10;
+    }
   }
   if (points === 22 && rank.length === 2) {
     points = 21;
