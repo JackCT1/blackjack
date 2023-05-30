@@ -6,6 +6,8 @@ const playerHandDisplay = document.querySelector(".player-cards");
 const dealerHandDisplay = document.querySelector(".dealer-cards");
 const hitButton = document.getElementById("hit-btn");
 const stickButton = document.getElementById("stick-btn");
+const dealerScore = document.getElementById("dealer-score");
+const playerScore = document.getElementById("player-score");
 
 const rankToPoints = {
   A: 11,
@@ -99,11 +101,13 @@ function displayCard(hand, cardParentDiv) {
 const shuffledDeck = shuffleDeck(createDeck());
 const playerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
 displayCard(playerHand, playerHandDisplay);
+playerScore.innerHTML = pointsFor(playerHand);
 
 hitButton.addEventListener("click", function () {
   const card = shuffledDeck.shift();
   playerHand.push(card);
   displayCard(playerHand, playerHandDisplay);
+  playerScore.innerHTML = pointsFor(playerHand);
 
   if (pointsFor(playerHand) > 21) {
     console.log("You have gone over 21! You lose!");
@@ -113,10 +117,12 @@ hitButton.addEventListener("click", function () {
 stickButton.addEventListener("click", function () {
   const dealerHand = [shuffledDeck.shift(), shuffledDeck.shift()];
   displayCard(dealerHand, dealerHandDisplay);
+  dealerScore.innerHTML = pointsFor(dealerHand);
   while (pointsFor(dealerHand) < 17) {
     const card = shuffledDeck.shift();
     dealerHand.push(card);
     displayCard(dealerHand, dealerHandDisplay);
+    dealerScore.innerHTML = pointsFor(dealerHand);
   }
   if (pointsFor(dealerHand) > 21) {
     console.log(WIN_MESSAGE);
